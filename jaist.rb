@@ -1,6 +1,7 @@
 require 'open-uri'
 require 'nokogiri'
 require 'terminal-table'
+require 'colorize'
 
 
 
@@ -60,7 +61,7 @@ end
 
 ##########################################################
 #Issue and volume # of the journal
-print "Type wich YEAR are you looking for (i.e 2012) ? : "  
+print "Type wich YEAR are you looking for (i.e 2012) ? : "
 STDOUT.flush  
 year = gets.chomp  
 
@@ -69,8 +70,8 @@ valid_year = (1950..Time.now.year).to_a
 it_s_valid  = valid_year.include?(year.to_i)
 
 unless it_s_valid
-   puts "\n\nError! \n We can only look for Issues between 1950-2014)".upcase
-   puts "\tyour request was for the year #{year}\n\n"
+   puts "\n\nError! \n We can only look for Issues between 1950-2014)".upcase.colorize( :background => :red)
+   puts "\tyour request was for the year #{year}\n\n".colorize( :background => :red)
    exit!
 end
 ##########
@@ -88,7 +89,7 @@ rows = []
 list_of_issue = issues.map { |issue| Issue.new(issue)}
 index = 0
 list_of_issue.each do |issue|
-  rows << [{:value => index.to_s, :align => :center}, issue.issue_date, issue.issue_page]
+  rows << [{:value => index.to_s.colorize(:blue), :align => :center}, issue.issue_date, issue.issue_page]
   index = index.next
 end
 
